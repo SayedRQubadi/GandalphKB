@@ -12,6 +12,17 @@ def load_protein_data():
             proteins.append(row)
     return proteins
 
+def load_sequence_data():
+    sequences = []
+    with open('sequences.csv', newline='', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            sequences.append(row)
+    return sequences
+
+sequence_data = load_sequence_data()
+
+
 # In-memory cache of CSV data
 protein_data = load_protein_data()
 
@@ -24,9 +35,6 @@ def index():
 def search():
     # Retrieving the query from request args
     query = request.args.get('query', '').strip()
-    # Debug: print out how many records we have and what query we received
-    print("Query:", query)
-    print("Loaded protein data:", len(protein_data), "records")
     if query:
         # Case-insensitive substring match over both 'protein_code' and 'protein_name'
         query_lower = query.lower()
@@ -48,6 +56,22 @@ def protein_detail(protein_code):
 
     # Render a simple detail page with all protein fields
     return render_template('protein_detail.html', protein=match)
+
+@app.route('/sequence/<protein_code>')
+def sequence_detail(protein_code):
+    # Find the matching row
+    match = None
+    for row in sequence_data:
+        if row['protein_code'].lower() == protein_code.lower():
+            match = row
+            break
+
+    if not match:
+        return "Sequence not found", 404
+
+    # 'match' now has { "protein_code": "XXX", "sequence": "ATCG..." }
+    return render_template('sequence_detail.html', sequence_row=match)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

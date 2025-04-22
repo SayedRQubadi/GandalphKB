@@ -6,12 +6,12 @@
 </head>
 <body>
     <h1>Protein Details</h1>
-    <p><strong>Code:</strong> {{ protein.protein_code }}</p>
-    <p><strong>Name:</strong> {{ protein.protein_name }}</p>
-    <p><strong>Gene_Names:</strong> {{ protein.gene_names }}</p>
+    <p><strong>Uniprot Accesion #:</strong> <a href="https://www.uniprot.org/uniprotkb/{{ protein.protein_code }}" target="_blank"> {{ protein.protein_code }} </a> </p>
+    <p><strong>Uniprot Name:</strong> {{ protein.protein_name }}</p>
+    <p><strong>Gene Name:</strong> {{ protein.gene_names }}</p>
+    <p><strong>Protein Names:</strong> {{ protein.protein_names }}</p>
     <p><strong>Organism:</strong> {{ protein.Organism }}</p>
-    <p><strong>Length:</strong> {{ protein.Length }}</p>
-    <p><strong>Long_Names:</strong> {{ protein.protein_names }}</p>
+    <p><strong>Amino Acid Length:</strong> <a href="/sequence/{{ protein.protein_code }}"> {{ protein.Length }} </a> </p>
 
     <!-- Add any other fields you may have in proteins.csv here.
          For example:
