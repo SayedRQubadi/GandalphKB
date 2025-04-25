@@ -65,7 +65,6 @@ def sequence_detail(protein_code):
         if row['protein_code'].lower() == protein_code.lower():
             match = row
             break
-
     if not match:
         return "Sequence not found", 404
 
