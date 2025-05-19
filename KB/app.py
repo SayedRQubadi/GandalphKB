@@ -22,6 +22,17 @@ def load_sequence_data():
 
 sequence_data = load_sequence_data()
 
+# format sequence in lines
+def format_sequence_with_indices(seq, line_length=60):
+    lines = []
+    for i in range(0, len(seq), line_length):
+        segment = seq[i:i + line_length]
+        start = i + 1
+        end = i + len(segment)
+        # Format line: "start sequence end"
+        lines.append(f"{start:<5} {segment} {end}")
+    return lines
+
 
 # In-memory cache of CSV data
 protein_data = load_protein_data()
@@ -59,17 +70,17 @@ def protein_detail(protein_code):
 
 @app.route('/sequence/<protein_code>')
 def sequence_detail(protein_code):
-    # Find the matching row
-    match = None
-    for row in sequence_data:
-        if row['protein_code'].lower() == protein_code.lower():
-            match = row
-            break
+    match = next((r for r in sequence_data
+                  if r.get('protein_code', '').lower() == protein_code.lower()), None)
     if not match:
         return "Sequence not found", 404
 
-    # 'match' now has { "protein_code": "XXX", "sequence": "ATCG..." }
-    return render_template('sequence_detail.html', sequence_row=match)
+    raw_seq = match.get('sequence', '').replace('\n', '').strip()
+    formatted = format_sequence_with_indices(raw_seq)
+
+    return render_template('sequence_detail.html',
+                           sequence_row=match,
+                           formatted_sequence=formatted)
 
 
 if __name__ == '__main__':

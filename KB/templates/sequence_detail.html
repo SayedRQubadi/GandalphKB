@@ -6,8 +6,11 @@
 </head>
 <body>
     <h1>Sequence for {{ sequence_row.protein_code }}</h1>
-    <p><strong>Sequence:</strong></p>
-    <pre>{{ sequence_row.sequence }}</pre>  <!-- Using <pre> for better formatting -->
+    <pre>
+    {% for line in formatted_sequence %}
+    {{ line }}
+    {% endfor %}
+    </pre>
     <p><a href="/">Back to Home</a></p>
 </body>
 </html>
