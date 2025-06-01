@@ -1,0 +1,5 @@
+multiple search bars
+UNI-prot.org 
+    csv files for GNA* Homo Sapiens - gAlpha - reviewed
+HTML page to add the protein 
+HTML page to hold protein information - name, sequence

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sequence Detail</title>
+</head>
+<body>
+    <h1>Sequence for {{ sequence_row.protein_code }}</h1>
+    <pre>
+    {% for line in formatted_sequence %}
+    {{ line }}
+    {% endfor %}
+    </pre>
+    <p><a href="/">Back to Home</a></p>
+</body>
+</html>
